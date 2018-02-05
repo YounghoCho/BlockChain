@@ -108,60 +108,81 @@ function getErrorMessage(field) {
 app.post('/api/contract/borrower', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
-        let peers = req.body.peers;
-
-        logger.debug('username,orgName :'+username+' '+orgName);
-				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        let peers= req.body.peers;
+                                let args = [
+                                        req.body.apartName1,
+                                        req.body.apartSection1,
+                                        req.body.apartRoom1,
+                                        req.body.apartArea1,
+                                        req.body.priceOfPurchaseAndSale1,
+                                        req.body.downPayment1,
+                                        req.body.balance1,
+                                        req.body.deliveryDate1,
+                                        req.body.lessorPhone1,
+                                        req.body.lessorName1,
+                                        req.body.tenantPhone1,
+                                        req.body.tenantName1
+                                ];
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
 });
-//get a lender's page
-app.get('/api/contract/lender', function(req,res){
-        res.status(200).json({message:"okay"});
-});
+
 //confirm the contract
 app.post('/api/contract/lender', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
         let peers = req.body.peers;
-				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        let args=[
+        req.body.apartName2,
+        req.body.apartSection2,
+        req.body.apartRoom2,
+        req.body.apartArea2,
+        req.body.priceOfPurchaseAndSale2,
+        req.body.downPayment2,
+        req.body.balance2,
+        req.body.deliveryDate2,
+        req.body.lessorPhone2,
+        req.body.lessorName2,
+        req.body.tenantPhone2,
+        req.body.tenantName2
+        ];
+        //peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
 });
-//get a bank's page
-app.get('/api/contract/bank', function(req,res){
-        res.status(200).json({message:"okay"});
-});
+
+
 //payback the loan
 app.post('/api/contract/bank', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
         let peers = req.body.peers;
+        let args=[req.body.receiveMoney, 'true'];
 				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
 });
-//get a court's page
-app.get('/api/contract/court', function(req,res){
-        res.status(200).json({message:"okay"});
-});
+
 //cancel the collateral security
 app.post('/api/contract/court', function(req,res){
-        let username= req.body.username;
-        let orgName= req.body.orgName;
-        let peers = req.body.peers;
-				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+                                let username= req.body.username;
+                                let orgName= req.body.orgName;
+                                let peers = req.body.peers;
+
+        let args=[req.body.cancelCS, 'true'];
+                                //when nodejs get 'GET' as a http request, we use function 'get' not set.
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
 });
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////// REST ENDPOINTS START HERE ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

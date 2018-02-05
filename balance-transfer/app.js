@@ -101,7 +101,67 @@ function getErrorMessage(field) {
 	};
 	return response;
 }
+/////////////
+///youngho///
+/////////////
+//write a contract
+app.post('/api/contract/borrower', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
 
+        logger.debug('username,orgName :'+username+' '+orgName);
+				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:"okay"});
+        });
+});
+//get a lender's page
+app.get('/api/contract/lender', function(req,res){
+        res.status(200).json({message:"okay"});
+});
+//confirm the contract
+app.post('/api/contract/lender', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
+				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:"okay"});
+        });
+});
+//get a bank's page
+app.get('/api/contract/bank', function(req,res){
+        res.status(200).json({message:"okay"});
+});
+//payback the loan
+app.post('/api/contract/bank', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
+				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:"okay"});
+        });
+});
+//get a court's page
+app.get('/api/contract/court', function(req,res){
+        res.status(200).json({message:"okay"});
+});
+//cancel the collateral security
+app.post('/api/contract/court', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
+				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', [username, orgName], req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:"okay"});
+        });
+});
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////// REST ENDPOINTS START HERE ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

@@ -104,6 +104,19 @@ function getErrorMessage(field) {
 /////////////
 ///youngho///
 /////////////
+//test
+app.post('/api/contract/lender', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
+        let args=['money'];
+        //peers, channelName, ChaincodeName, fucntionName, args, username, orgName
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'get', args, req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:message});
+        });
+				//get 함수로도 block에 쌓이는 values들을 불러올 수 없으며 상태값만 받아올 수 있다.
+});
 //write a contract
 app.post('/api/contract/borrower', function(req,res){
         let username= req.body.username;

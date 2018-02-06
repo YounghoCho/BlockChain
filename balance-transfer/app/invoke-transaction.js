@@ -120,6 +120,7 @@ var invokeChaincode = function(peerNames, channelName, chaincodeName, fcn, args,
 			var sendPromise = channel.sendTransaction(request);
 			return Promise.all([sendPromise].concat(eventPromises)).then((results) => {
 				logger.debug(' event promise all complete and testing complete');
+				logger.debug(results);
 				return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call
 			}).catch((err) => {
 				logger.error(

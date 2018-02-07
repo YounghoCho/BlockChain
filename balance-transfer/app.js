@@ -104,39 +104,47 @@ function getErrorMessage(field) {
 /////////////
 ///youngho///
 /////////////
-//test
-app.post('/api/contract/lender', function(req,res){
-        let username= req.body.username;
-        let orgName= req.body.orgName;
-        let peers = req.body.peers;
-        let args=['money'];
-        //peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'get', args, req.username, req.orgname)
-        .then(function(message) {
-                res.status(200).json({message:message});
-        });
-				//get 함수로도 block에 쌓이는 values들을 불러올 수 없으며 상태값만 받아올 수 있다.
-});
+
 //write a contract
 app.post('/api/contract/borrower', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
         let peers= req.body.peers;
-                                let args = [
-                                        req.body.apartName1,
-                                        req.body.apartSection1,
-                                        req.body.apartRoom1,
-                                        req.body.apartArea1,
-                                        req.body.priceOfPurchaseAndSale1,
-                                        req.body.downPayment1,
-                                        req.body.balance1,
-                                        req.body.deliveryDate1,
-                                        req.body.lessorPhone1,
-                                        req.body.lessorName1,
-                                        req.body.tenantPhone1,
-                                        req.body.tenantName1
-                                ];
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
+				let contract={
+                Key : '123',
+                ApartName1 : 'a',
+                ApartSection1 : 'b',
+                ApartRoom1 : 'c',
+                ApartArea1 : 'd',
+                PriceOfPurchaseAndSale1 : 'e',
+                DownPayment1 : 'f',
+                Balance1 : 'g',
+                DeliveryDate1 : Date.now(),
+                LessorPhone1 : '1',
+                LessorName1 : '2',
+                TenantPhone1 : '3',
+                TenantName1 :'4',
+
+								ApartName2 : 'a',
+								ApartSection2 : 'b',
+								ApartRoom2 : 'c',
+								ApartArea2 : 'd',
+								PriceOfPurchaseAndSale2 : 'e',
+								DownPayment2 : 'f',
+								Balance2 : 'g',
+								DeliveryDate2 : Date.now(),
+								LessorPhone2 : '1',
+								LessorName2 : '2',
+								TenantPhone2 : '3',
+								TenantName2 :'4',
+
+								LessorConfirmed : true,
+								TenantConfirmed :true,
+								ReceiveMoney : true,
+								CancelCS : true
+        }
+				let args=[JSON.stringify(contract)];
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc1', 'setContract', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
@@ -147,36 +155,100 @@ app.post('/api/contract/lender', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
         let peers = req.body.peers;
-        let args=[
-        req.body.apartName2,
-        req.body.apartSection2,
-        req.body.apartRoom2,
-        req.body.apartArea2,
-        req.body.priceOfPurchaseAndSale2,
-        req.body.downPayment2,
-        req.body.balance2,
-        req.body.deliveryDate2,
-        req.body.lessorPhone2,
-        req.body.lessorName2,
-        req.body.tenantPhone2,
-        req.body.tenantName2
-        ];
+
+				let contract={
+                Key : '123',
+                ApartName1 : 'a',
+                ApartSection1 : 'b',
+                ApartRoom1 : 'c',
+                ApartArea1 : 'd',
+                PriceOfPurchaseAndSale1 : 'e',
+                DownPayment1 : 'f',
+                Balance1 : 'g',
+                DeliveryDate1 : Date.now(),
+                LessorPhone1 : '1',
+                LessorName1 : '2',
+                TenantPhone1 : '3',
+                TenantName1 :'4',
+
+								ApartName2 : 'a',
+								ApartSection2 : 'b',
+								ApartRoom2 : 'c',
+								ApartArea2 : 'd',
+								PriceOfPurchaseAndSale2 : 'e',
+								DownPayment2 : 'f',
+								Balance2 : 'g',
+								DeliveryDate2 : Date.now(),
+								LessorPhone2 : '1',
+								LessorName2 : '2',
+
+								LessorConfirmed : true,
+								TenantConfirmed :true,
+								ReceiveMoney : true,
+								CancelCS : true
+        }
+				let args=[JSON.stringify(contract)];
         //peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc1', 'setContract', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
 });
+//test get
+app.post('api/contract/testget', function(req,res){
+        let username= req.body.username;
+        let orgName= req.body.orgName;
+        let peers = req.body.peers;
+        let key='123';
+				//get values in Block with key
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc1', 'getContract', key, req.username, req.orgname)
+        .then(function(message) {
+                res.status(200).json({message:"okay"});
+        });
 
+});
 
 //payback the loan
 app.post('/api/contract/bank', function(req,res){
         let username= req.body.username;
         let orgName= req.body.orgName;
         let peers = req.body.peers;
-        let args=[req.body.receiveMoney, 'true'];
+				let contract={
+                Key : '123',
+                ApartName1 : 'a',
+                ApartSection1 : 'b',
+                ApartRoom1 : 'c',
+                ApartArea1 : 'd',
+                PriceOfPurchaseAndSale1 : 'e',
+                DownPayment1 : 'f',
+                Balance1 : 'g',
+                DeliveryDate1 : Date.now(),
+                LessorPhone1 : '1',
+                LessorName1 : '2',
+                TenantPhone1 : '3',
+                TenantName1 :'4',
+
+								ApartName2 : 'a',
+								ApartSection2 : 'b',
+								ApartRoom2 : 'c',
+								ApartArea2 : 'd',
+								PriceOfPurchaseAndSale2 : 'e',
+								DownPayment2 : 'f',
+								Balance2 : 'g',
+								DeliveryDate2 : Date.now(),
+								LessorPhone2 : '1',
+								LessorName2 : '2',
+								TenantPhone2 : '3',
+								TenantName2 :'4',
+
+								LessorConfirmed : true,
+								TenantConfirmed :true,
+								ReceiveMoney : true,
+								CancelCS : true
+        }
+				let args=[JSON.stringify(contract)];
 				//peers, channelName, ChaincodeName, fucntionName, args, username, orgName
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc1', 'setContract', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });
@@ -188,9 +260,42 @@ app.post('/api/contract/court', function(req,res){
                                 let orgName= req.body.orgName;
                                 let peers = req.body.peers;
 
-        let args=[req.body.cancelCS, 'true'];
+																let contract={
+												                Key : '123',
+												                ApartName1 : 'a',
+												                ApartSection1 : 'b',
+												                ApartRoom1 : 'c',
+												                ApartArea1 : 'd',
+												                PriceOfPurchaseAndSale1 : 'e',
+												                DownPayment1 : 'f',
+												                Balance1 : 'g',
+												                DeliveryDate1 : Date.now(),
+												                LessorPhone1 : '1',
+												                LessorName1 : '2',
+												                TenantPhone1 : '3',
+												                TenantName1 :'4',
+
+																				ApartName2 : 'a',
+																				ApartSection2 : 'b',
+																				ApartRoom2 : 'c',
+																				ApartArea2 : 'd',
+																				PriceOfPurchaseAndSale2 : 'e',
+																				DownPayment2 : 'f',
+																				Balance2 : 'g',
+																				DeliveryDate2 : Date.now(),
+																				LessorPhone2 : '1',
+																				LessorName2 : '2',
+																				TenantPhone2 : '3',
+																				TenantName2 :'4',
+
+																				LessorConfirmed : true,
+																				TenantConfirmed :true,
+																				ReceiveMoney : true,
+																				CancelCS : true
+												        }
+																let args=[JSON.stringify(contract)];
                                 //when nodejs get 'GET' as a http request, we use function 'get' not set.
-        invoke.invokeChaincode(peers, 'mychannel', 'sacc', 'set', args, req.username, req.orgname)
+        invoke.invokeChaincode(peers, 'mychannel', 'sacc1', 'setContract', args, req.username, req.orgname)
         .then(function(message) {
                 res.status(200).json({message:"okay"});
         });

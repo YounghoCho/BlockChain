@@ -111,7 +111,7 @@ app.post('/api/contract/borrower', function(req,res){
         let orgName= req.body.orgName;
         let peers= req.body.peers;
 				let contract={
-                Key : '123',
+                Key : '1',
                 ApartName1 : 'a',
                 ApartSection1 : 'b',
                 ApartRoom1 : 'c',
@@ -157,7 +157,7 @@ app.post('/api/contract/lender', function(req,res){
         let peers = req.body.peers;
 
 				let contract={
-                Key : '123',
+                Key : '2',
                 ApartName1 : 'a',
                 ApartSection1 : 'b',
                 ApartRoom1 : 'c',
@@ -214,7 +214,7 @@ app.post('/api/contract/bank', function(req,res){
         let orgName= req.body.orgName;
         let peers = req.body.peers;
 				let contract={
-                Key : '123',
+                Key : '3',
                 ApartName1 : 'a',
                 ApartSection1 : 'b',
                 ApartRoom1 : 'c',
@@ -261,7 +261,7 @@ app.post('/api/contract/court', function(req,res){
                                 let peers = req.body.peers;
 
 																let contract={
-												                Key : '123',
+												                Key : '4',
 												                ApartName1 : 'a',
 												                ApartSection1 : 'b',
 												                ApartRoom1 : 'c',
